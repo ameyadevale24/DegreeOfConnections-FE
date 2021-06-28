@@ -13,6 +13,17 @@ export class ConnectionsUploadComponent implements OnInit {
   constructor(private connectionsServices: ConnectionsService) { }
 
   ngOnInit(): void {
+    this.getConnections()
+  }
+
+  getConnections() {
+    return this.connectionsServices.getConnections()
+    .subscribe(
+      (res) => { console.log(res) },
+      err => {
+        alert("Error getting connections");
+      }
+    )
   }
 
   updateFile(event:any) {
@@ -40,3 +51,4 @@ export class ConnectionsUploadComponent implements OnInit {
   }
 
 }
+

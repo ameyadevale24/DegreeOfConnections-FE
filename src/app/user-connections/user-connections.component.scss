@@ -1,9 +1,22 @@
-.col1 {
-    width: 30%;
+.lists {
+    height: 300px;
+}
+
+.col {
+    width: 28%;
     float: left;
     margin: 25px;
 }
 
 .searchbar {
     width: 100%;
+}
+
+ul {
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+li {
+    cursor: pointer;
 }

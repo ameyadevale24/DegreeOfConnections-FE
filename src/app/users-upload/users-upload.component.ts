@@ -13,6 +13,17 @@ export class UsersUploadComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.getUsers()
+  }
+
+  getUsers() {
+    this.userService.getUsers()
+    .subscribe(
+      (res) => { console.log(res) },
+      err => {
+        alert("Error getting users");
+      }
+    )
   }
 
   updateFile(event:any) {

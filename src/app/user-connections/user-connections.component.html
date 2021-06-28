@@ -1,15 +1,27 @@
 <h4>Welcome to user connections</h4>
+<div class="lists">
+    <div class="col">
+        <input type="text" class= "searchbar" #searchTermA (input) = "filterList(searchTermA.value,'A')">
+        <ul class="list-group">
+            <li class="list-group-item" 
+                *ngFor="let user of filteredListA">
+                    <span (click)="selectUserId(user.id, 'A')">{{user.name}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="col">
+        <input type="text" class= "searchbar" #searchTermB (input) = "filterList(searchTermB.value,'B')">
+        <ul class="list-group">
+            <li class="list-group-item"
+                *ngFor="let user of filteredListB">
+                    <span (click)="selectUserId(user.id, 'B')" >{{user.name}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
 <div>
-    <div class="col1">
-        <input type="text" class= "searchbar" id="searchbar1">
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let user of users">{{user}}</li>
-        </ul>
-    </div>
-    <div class="col1">
-        <input type="text" class= "searchbar" id="searchbar2">
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let user of users">{{user}}</li>
-        </ul>
-    </div>
+    <div>The degree of connection between {{selectedFirstUserId}} and {{selectedSecondUserId}} is {{degree}} </div>
+    <div>And the shortest connection is:</div>
+    <div>{{path}}</div>
+    <button class="btn btn-primary" type="button" (click)="getConnectionsBetweeen()">Get connections between</button>
 </div>
