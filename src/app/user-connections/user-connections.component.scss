@@ -1,11 +1,11 @@
 .lists {
-    height: 300px;
+    width: 80%;
 }
 
 .col {
     width: 28%;
     float: left;
-    margin: 25px;
+    margin: 2% 11%;
 }
 
 .searchbar {
@@ -19,4 +19,24 @@ ul {
 
 li {
     cursor: pointer;
+}
+
+.box {
+    width: 80%;
+    margin: 1% 9%;
+    border: solid 1px black;
+    clear: both;
+}
+
+.box div {
+    margin: 1.5%;
+}
+
+.activeUser {
+    background-color: skyblue;
+    font-weight: bold;
+}
+
+.result {
+    margin: 0 !important;
 }

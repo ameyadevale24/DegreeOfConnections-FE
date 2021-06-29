@@ -9,14 +9,13 @@ import { UserService } from '../user.service';
 })
 export class UserConnectionsComponent implements OnInit {
 
-  //an array to hold the user objects
   usersList:any = [];
   filteredListA:any = [];
   filteredListB:any = [];
-  selectedFirstUserId:any;
-  selectedSecondUserId:any;
-  degree:any;
-  path:any;
+  selectedFirstUser:any;
+  selectedSecondUser:any;
+  connectionResponse:any;
+  isConnectionsLoaded = false;
 
   constructor(private userService: UserService, private connectionService: ConnectionsService) { }
   
@@ -26,15 +25,23 @@ export class UserConnectionsComponent implements OnInit {
   }
 
   getConnectionsBetweeen() {
+    // proceed only if both users are selected
+    if (this.selectedFirstUser == undefined || this.selectedSecondUser == undefined) {
+      return;
+    }
+
     //gets connection between selected userids
-    this.connectionService.getConnectionsBetween(this.selectedFirstUserId, this.selectedSecondUserId)
+    this.connectionService.getConnectionsBetween(this.selectedFirstUser.id, this.selectedSecondUser.id)
     .subscribe(
       (res:any) => {
         console.log(res)
-        this.degree = res.degree;
-        this.path = res.path;
+        this.connectionResponse = res;
+        this.isConnectionsLoaded = true;
       },
-      err => { alert("No response for connection between users") }
+      err => { 
+        alert("No response for connection between users");
+        this.isConnectionsLoaded = true;
+      }
     )
   }
 
@@ -53,28 +60,32 @@ export class UserConnectionsComponent implements OnInit {
   filterList(val:any, list:any) {
     if(val.length > 0) {
       if(list == 'A') {
-        this.filteredListA = Object.assign([],this.usersList).filter((user:any) => user.name.startsWith(val));
+        this.filteredListA = Object.assign([],this.usersList).filter((user:any) => user.name.includes(val));
       } else if(list == 'B') {
-        this.filteredListB = Object.assign([],this.usersList).filter((user:any) => user.name.startsWith(val));
+        this.filteredListB = Object.assign([],this.usersList).filter((user:any) => user.name.includes(val));
       }
     } else {
-      this.assignCopy();
+      this.assignCopy(list);
     }
   }
 
-  assignCopy() {
-    this.filteredListA = Object.assign([], this.usersList);
-    this.filteredListB = Object.assign([], this.usersList);
+  assignCopy(list:any) {
+    if(list == 'A') {
+      this.filteredListA = Object.assign([], this.usersList);
+    } else if(list == 'B') {
+      this.filteredListB = Object.assign([], this.usersList);
+    }
  }
 
- selectUserId(id:any, type:any) {
-    if(type == 'A') {
-      this.selectedFirstUserId = id;
-    } else if(type == 'B') {
-      this.selectedSecondUserId = id;
+ selectUser(user:any, list:any) {
+    if(list == 'A') {
+      this.selectedFirstUser = user;
+    } else if(list == 'B') {
+      this.selectedSecondUser = user;
     }
-    console.log(this.selectedFirstUserId);
-    console.log(this.selectedSecondUserId);
+    this.getConnectionsBetweeen();
+    console.log(this.selectedFirstUser);
+    console.log(this.selectedSecondUser);
  }
 
 }

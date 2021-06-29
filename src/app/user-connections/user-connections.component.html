@@ -1,27 +1,33 @@
-<h4>Welcome to user connections</h4>
+<h4>User connections</h4>
 <div class="lists">
     <div class="col">
         <input type="text" class= "searchbar" #searchTermA (input) = "filterList(searchTermA.value,'A')">
         <ul class="list-group">
-            <li class="list-group-item" 
+            <li class="list-group-item" [ngClass]="{'activeUser': user.name == selectedFirstUser?.name}" 
                 *ngFor="let user of filteredListA">
-                    <span (click)="selectUserId(user.id, 'A')">{{user.name}}</span>
+                    <div  (click)="selectUser(user, 'A')">{{user.name}}</div>
             </li>
         </ul>
     </div>
     <div class="col">
         <input type="text" class= "searchbar" #searchTermB (input) = "filterList(searchTermB.value,'B')">
         <ul class="list-group">
-            <li class="list-group-item"
+            <li class="list-group-item" [ngClass]="{'activeUser': user.name == selectedSecondUser?.name}" 
                 *ngFor="let user of filteredListB">
-                    <span (click)="selectUserId(user.id, 'B')" >{{user.name}}</span>
+                    <div (click)="selectUser(user, 'B')" >{{user.name}}</div>
             </li>
         </ul>
     </div>
 </div>
-<div>
-    <div>The degree of connection between {{selectedFirstUserId}} and {{selectedSecondUserId}} is {{degree}} </div>
-    <div>And the shortest connection is:</div>
-    <div>{{path}}</div>
-    <button class="btn btn-primary" type="button" (click)="getConnectionsBetweeen()">Get connections between</button>
+<div class="box">
+    <div *ngIf="isConnectionsLoaded">
+        <p>Result: {{connectionResponse?.result}}</p>
+        <div class="result" *ngIf="connectionResponse.degree>0">
+            <p>The degree of connection between {{selectedFirstUser?.name}} and {{selectedSecondUser?.name}} is {{connectionResponse?.degree}} </p>
+            <span>And the shortest connection is:<p>{{connectionResponse?.path}}</p></span>
+        </div>
+    </div>
+    <div *ngIf="!isConnectionsLoaded">
+        <p>Please select users to find connection</p>
+    </div>
 </div>
