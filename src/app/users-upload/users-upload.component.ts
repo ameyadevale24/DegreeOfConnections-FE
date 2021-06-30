@@ -9,22 +9,13 @@ import { UserService } from '../user.service';
 export class UsersUploadComponent implements OnInit {
 
   file:any;
+  message:any;
+  fileUploaded = false;
+  uploadStatus = false;
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-    this.getUsers()
-  }
-
-  getUsers() {
-    this.userService.getUsers()
-    .subscribe(
-      (res) => { console.log(res) },
-      err => {
-        alert("Error getting users");
-      }
-    )
-  }
+  ngOnInit(): void {  }
 
   updateFile(event:any) {
     //updates the global file variable (incase user selects wrong file)
@@ -40,9 +31,15 @@ export class UsersUploadComponent implements OnInit {
       userData.append('file', this.file, this.file.name);
       this.userService.uploadUsers(userData)
       .subscribe(
-        (res) => {},
+        (res) => { 
+          this.fileUploaded = true;
+          this.uploadStatus = true;
+          this.message = "File uploaded successfully!";
+        },
         err => {
-          alert("Error while uploading users file");
+          this.uploadStatus = false;
+          this.fileUploaded = true;
+          this.message = "File uploading failed!";
         }
       )
     } else {

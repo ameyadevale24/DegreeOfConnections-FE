@@ -9,22 +9,13 @@ import { ConnectionsService } from '../connections.service';
 export class ConnectionsUploadComponent implements OnInit {
 
   file:any
+  message:any;
+  fileUploaded = false;
+  uploadStatus = false;
 
   constructor(private connectionsServices: ConnectionsService) { }
 
-  ngOnInit(): void {
-    this.getConnections()
-  }
-
-  getConnections() {
-    return this.connectionsServices.getConnections()
-    .subscribe(
-      (res) => { console.log(res) },
-      err => {
-        alert("Error getting connections");
-      }
-    )
-  }
+  ngOnInit(): void {  }
 
   updateFile(event:any) {
     //updates the global file variable (incase user selects wrong file)
@@ -40,9 +31,15 @@ export class ConnectionsUploadComponent implements OnInit {
       connections.append('file', this.file, this.file.name);
       this.connectionsServices.uploadConnections(connections)
       .subscribe(
-        (res) => {},
+        (res) => {
+          this.uploadStatus = true;
+          this.fileUploaded = true;
+          this.message = "File uploaded successfully!";
+        },
         err => {
-          alert("Error while uploading connections file");
+          this.uploadStatus = false;
+          this.fileUploaded = true;
+          this.message = "File uploading failed!";
         }
       )
     } else {

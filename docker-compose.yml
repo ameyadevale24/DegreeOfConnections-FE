@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  degreeofconnectionsfe:
+    image: degreeofconnectionsfe
+    build:
+      context: .
+    ports:
+      - 4200:4200

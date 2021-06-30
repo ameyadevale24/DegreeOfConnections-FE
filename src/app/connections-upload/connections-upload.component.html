@@ -4,4 +4,5 @@
         <input type="file" id="file" (change)="updateFile($event)"/>
         <button class="btn btn-primary upload" type="button" (click)="uploadConnections()">Upload</button>
     </div>
+    <p *ngIf="fileUploaded" [ngClass]="{'success': uploadStatus}">{{message}}</p>
 </div>
