@@ -53,7 +53,7 @@ export class UserConnectionsComponent implements OnInit {
         this.filteredListA = res;
         this.filteredListB = res;
       },
-      err => { alert("Couldnt get list of users") }
+      err => { console.log("no users found") }
     )
   }
 
