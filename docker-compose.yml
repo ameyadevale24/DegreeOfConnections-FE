@@ -1,11 +1,14 @@
-version: '3.4'
+version: '3.7'
 
 services:
   degreeofconnectionsfe:
-    image: degreeofconnectionsfe
     build:
       context: .
     ports:
       - 4200:4200
-    links:
-      - degreeofconnectionsbe
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
