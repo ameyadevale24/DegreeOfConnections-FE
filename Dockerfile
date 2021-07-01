@@ -1,8 +1,13 @@
 FROM node:12.18-alpine
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install request
-EXPOSE 4200
-RUN npm install --only=dev && npm cache clean -f
+RUN npm install -g @angular/cli
+COPY package.json ./
+RUN npm install
+# RUN npm install --save-dev @angular-devkit/build-angular
+# RUN npm install --only=dev && npm cache clean -f
 COPY . .
-CMD ["npm", "start"]
+# RUN ng build --prod
+EXPOSE 4200
+# CMD /usr/src/app/node_modules/.bin/ng serve --proxy-config proxy.conf.js
+# CMD /usr/src/app/node_modules/.bin/npm start
+CMD npm start

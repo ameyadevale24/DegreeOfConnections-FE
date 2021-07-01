@@ -7,3 +7,5 @@ services:
       context: .
     ports:
       - 4200:4200
+    links:
+      - degreeofconnectionsbe
